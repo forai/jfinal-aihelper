@@ -137,6 +137,27 @@ public class SqlParam {
         getSqlBuilder().search(getSql(),alias,key,getParamMap(),getArgs(),searchColumns);
     }
 
+    /**
+     * 根据sort降序
+     * @param sort
+     */
+    public void orderDesc(String sort){
+        order(sort,"DESC");
+    }
+
+    /**
+     * 根据sort升序
+     * @param sort
+     */
+    public void orderAsc(String sort){
+        order(sort,"ASC");
+    }
+
+    /**
+     * 排序
+     * @param sort
+     * @param order
+     */
     public void order(String sort, String order){
         getSqlBuilder().order(getSql(),alias,sort,order);
     }
