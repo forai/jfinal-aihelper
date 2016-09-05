@@ -170,6 +170,10 @@ public class SqlParam{
         getSqlBuilder().order(getSql(),alias,getParamMap().getSort(),getParamMap().getOrder());
     }
 
+    public void orderBy(String orderByStr){
+        append(" "+orderByStr);
+    }
+
     public void dateBefore(String key){
         getSqlBuilder().dateBefore(getSql(),alias,key,getParamMap(),getArgs());
     }
