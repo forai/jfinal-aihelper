@@ -1,6 +1,7 @@
 package com.jfinal.aihelper.sql;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tj on 2016/1/8.23:38
@@ -10,35 +11,33 @@ public interface ISqlBuilder {
 
     /**
      * 添加查询条件
-     * @param pm 参数集合
-     * @param key 数据库字段集合同时也要存在于pm内
+     * @param value 查询的值
+     * @param column 数据库字段
      * @param args 查询参数集合
      * @param sql 查询语句对象
      * @param alias 别名
      */
-    void and(StringBuffer sql, String key, ParamMap pm, List<Object> args, String alias);
+    void and(StringBuffer sql, String alias,String column, Object value, List<Object> args);
 
 
     /**
      * 添加查询条件
-     * @param pm 参数集合
-     * @param keys 匹配字段数组
+     * @param columValuesMap 字段、值 对应的map
      * @param args 查询参数集合
      * @param sql 查询语句对象
      * @param alias 别名
      */
-     void and(StringBuffer sql, String[] keys, ParamMap pm, List<Object> args, String alias);
+     void and(StringBuffer sql, String alias, Map<String,Object> columValuesMap, List<Object> args);
 
     /**
      *
      * @param sql
      * @param alias
-     * @param key pm里面的需要查询的key
-     * @param pm 参数集合
+     * @param value 查询的值
      * @param args 查询参数集合
      * @param searchColumns 需要查询的字段（对应数据库）
      */
-    void search(StringBuffer sql, String alias, String key, ParamMap pm, List<Object> args, String[] searchColumns);
+    void search(StringBuffer sql, String alias, String[] searchColumns, Object value, List<Object> args);
 
     /**
      * 简单排序规则 order by alias.sort order
@@ -53,19 +52,21 @@ public interface ISqlBuilder {
      * 日期排序
      * @param sql
      * @param alias
-     * @param key
-     * @param pm
+     * @param column
+     * @param value
      * @param args
      */
-    void dateBefore(StringBuffer sql, String alias, String key, ParamMap pm, List<Object> args);
+    void dateBefore(StringBuffer sql, String alias, String column, Object value, List<Object> args);
 
     /**
      * 日期排序
      * @param sql
      * @param alias
-     * @param key
-     * @param pm
+     * @param column
+     * @param value
      * @param args
      */
-    void dateAfter(StringBuffer sql, String alias, String key, ParamMap pm, List<Object> args);
+    void dateAfter(StringBuffer sql, String alias, String column, Object value, List<Object> args);
+
+
 }

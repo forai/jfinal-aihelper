@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by tj on 2016/1/9.11:27
  */
-public class SqlParam {
+public class SqlParam{
 
     private StringBuffer sql;
     private ParamMap paramMap;
@@ -106,6 +106,10 @@ public class SqlParam {
         return getSql().toString();
     }
 
+    public String getFullSql(){
+        return getSelect()+" "+getSqlStr();
+    }
+
     /**
      * 返回参数数组
      * @return
@@ -125,17 +129,17 @@ public class SqlParam {
         return this;
     }
 
-    public void and(String key){
-        getSqlBuilder().and(getSql(),key,getParamMap(),getArgs(),alias);
-    }
-
-    public void and(String[] keys){
-        getSqlBuilder().and(getSql(),keys,getParamMap(),getArgs(),alias);
-    }
-
-    public void search(String key, String[] searchColumns){
-        getSqlBuilder().search(getSql(),alias,key,getParamMap(),getArgs(),searchColumns);
-    }
+//    public void and(String key){
+//        getSqlBuilder().and(getSql(),key,getParamMap(),getArgs(),alias);
+//    }
+//
+//    public void and(String[] keys){
+//        getSqlBuilder().and(getSql(),keys,getParamMap(),getArgs(),alias);
+//    }
+//
+//    public void search(String key, String[] searchColumns){
+//        getSqlBuilder().search(getSql(),alias,key,getParamMap(),getArgs(),searchColumns);
+//    }
 
     /**
      * 根据sort降序
@@ -201,9 +205,18 @@ public class SqlParam {
 
     public ISqlBuilder getSqlBuilder() {
         if(sqlBuilder==null){
-            setSqlBuilder(SqlBuilderManager.defaultSqlBuilder());
+            use();
         }
         return sqlBuilder;
+    }
+
+    public SqlParam use(String configName){
+        setSqlBuilder(SqlBuilderManager.me().getSqlBuilder(configName));
+        return this;
+    }
+
+    public SqlParam use(){
+        return use(SqlBuilderManager.MAIN_CONFIG_NAME);
     }
 
     public void setSqlBuilder(ISqlBuilder sqlBuilder) {
