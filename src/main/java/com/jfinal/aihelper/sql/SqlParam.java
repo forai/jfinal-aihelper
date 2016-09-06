@@ -107,7 +107,7 @@ public class SqlParam{
     }
 
     public String getFullSql(){
-        return getSelect()+" "+getSqlStr();
+        return getSelect()+getSqlStr();
     }
 
     /**
@@ -129,17 +129,88 @@ public class SqlParam{
         return this;
     }
 
-//    public void and(String key){
-//        getSqlBuilder().and(getSql(),key,getParamMap(),getArgs(),alias);
-//    }
-//
-//    public void and(String[] keys){
-//        getSqlBuilder().and(getSql(),keys,getParamMap(),getArgs(),alias);
-//    }
-//
-//    public void search(String key, String[] searchColumns){
-//        getSqlBuilder().search(getSql(),alias,key,getParamMap(),getArgs(),searchColumns);
-//    }
+    public StringBuffer getSql() {
+        return sql;
+    }
+
+    public void setSql(StringBuffer sql) {
+        this.sql = sql;
+    }
+
+    public ParamMap getParamMap() {
+        return paramMap;
+    }
+
+    public void setParamMap(ParamMap paramMap) {
+        this.paramMap = paramMap;
+    }
+
+    public Object getParamMapValue(String key){
+        return getParamMap().get(key);
+    }
+
+    public List<Object> getArgs() {
+        return args;
+    }
+
+    public void setArgs(List<Object> args) {
+        this.args = args;
+    }
+
+    public ISqlBuilder getSqlBuilder() {
+        if(sqlBuilder==null){
+            use();
+        }
+        return sqlBuilder;
+    }
+
+    public SqlParam use(String configName){
+        setSqlBuilder(SqlBuilderManager.me().getSqlBuilder(configName));
+        return this;
+    }
+
+    public SqlParam use(){
+        return use(SqlBuilderManager.MAIN_CONFIG_NAME);
+    }
+
+    public void setSqlBuilder(ISqlBuilder sqlBuilder) {
+        this.sqlBuilder = sqlBuilder;
+    }
+
+    public String getSelect() {
+        return select;
+    }
+
+    public void setSelect(String select) {
+        this.select = select;
+    }
+
+    /**
+     * 拼装and的查询语句
+     * @param column 字段名
+     * @param key 对应的Map的key
+     */
+    public void and(String column,String key){
+        getSqlBuilder().and(getSql(),alias,column,getParamMapValue(key),getArgs());
+    }
+
+    /**
+     * 拼装查询语句
+     * @param searchColumn 查询的字段
+     * @param key 对面值的key
+     */
+    public void search(String searchColumn,String key){
+        search(new String[]{searchColumn},key);
+    }
+
+    /**
+     * 拼装查询语句
+     * @param searchColumns 查询的字段数组
+     * @param key 对面值的key
+     */
+    public void search(String[] searchColumns,String key){
+        getSqlBuilder().search(getSql(),alias,searchColumns,getParamMapValue(key),getArgs());
+    }
 
     /**
      * 根据sort降序
@@ -171,68 +242,15 @@ public class SqlParam{
     }
 
     public void orderBy(String orderByStr){
-        append(" "+orderByStr);
+        append(" order by "+orderByStr);
     }
 
-    public void dateBefore(String key){
-        getSqlBuilder().dateBefore(getSql(),alias,key,getParamMap(),getArgs());
+    public void dateBefore(String column,String key){
+        getSqlBuilder().dateBefore(getSql(),alias,column,getParamMapValue(key),getArgs());
     }
 
-    public void dateAfter(String key){
-        getSqlBuilder().dateAfter(getSql(),alias,key,getParamMap(),getArgs());
+    public void dateAfter(String column,String key){
+        getSqlBuilder().dateAfter(getSql(),alias,column,getParamMapValue(key),getArgs());
     }
 
-
-    public StringBuffer getSql() {
-        return sql;
-    }
-
-    public void setSql(StringBuffer sql) {
-        this.sql = sql;
-    }
-
-    public ParamMap getParamMap() {
-        return paramMap;
-    }
-
-    public void setParamMap(ParamMap paramMap) {
-        this.paramMap = paramMap;
-    }
-
-    public List<Object> getArgs() {
-        return args;
-    }
-
-    public void setArgs(List<Object> args) {
-        this.args = args;
-    }
-
-    public ISqlBuilder getSqlBuilder() {
-        if(sqlBuilder==null){
-            use();
-        }
-        return sqlBuilder;
-    }
-
-    public SqlParam use(String configName){
-        setSqlBuilder(SqlBuilderManager.me().getSqlBuilder(configName));
-        return this;
-    }
-
-    public SqlParam use(){
-        return use(SqlBuilderManager.MAIN_CONFIG_NAME);
-    }
-
-    public void setSqlBuilder(ISqlBuilder sqlBuilder) {
-        this.sqlBuilder = sqlBuilder;
-    }
-
-
-    public String getSelect() {
-        return select;
-    }
-
-    public void setSelect(String select) {
-        this.select = select;
-    }
 }
