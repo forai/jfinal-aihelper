@@ -241,14 +241,28 @@ public class SqlParam{
         getSqlBuilder().order(getSql(),alias,getParamMap().getSort(),getParamMap().getOrder());
     }
 
+    /**
+     * 直接写order by 语句
+     * @param orderByStr
+     */
     public void orderBy(String orderByStr){
         append(" order by "+orderByStr);
     }
 
+    /**
+     * 日期排序
+     * @param column 字段
+     * @param key map的key
+     */
     public void dateBefore(String column,String key){
         getSqlBuilder().dateBefore(getSql(),alias,column,getParamMapValue(key),getArgs());
     }
 
+    /**
+     * 日期排序
+     * @param column 字段
+     * @param key map的key
+     */
     public void dateAfter(String column,String key){
         getSqlBuilder().dateAfter(getSql(),alias,column,getParamMapValue(key),getArgs());
     }
