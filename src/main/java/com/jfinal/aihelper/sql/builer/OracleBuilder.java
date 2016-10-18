@@ -78,10 +78,17 @@ public class OracleBuilder implements ISqlBuilder {
 
     @Override
     public void order(StringBuffer sql, String alias, String sort, String order) {
-        if (StringUtils.isBlank(sort)) {
-            throw new RuntimeException("sort can not be null or blank !");
+        if (StringUtils.isNotBlank(sort)) {
+            sql.append(" order by " + getAliasPrefix(alias) + sort + " " + order);
         }
-        sql.append(" order by " + getAliasPrefix(alias) + sort + " " + order);
+    }
+
+    @Override
+    public void order(StringBuffer sql, String[] orderStrs) {
+        if (orderStrs.length>0) {
+            sql.append(" order by ");
+            sql.append(StringUtils.join(orderStrs, ","));
+        }
     }
 
     /**

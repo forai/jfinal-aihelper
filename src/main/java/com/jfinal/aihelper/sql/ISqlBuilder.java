@@ -49,6 +49,13 @@ public interface ISqlBuilder {
     void order(StringBuffer sql, String alias, String sort, String order);
 
     /**
+     * 排序
+     * @param sql
+     * @param orderStrs 自定义的多个排序方式的字符串数组
+     */
+    void order(StringBuffer sql, String[] orderStrs);
+
+    /**
      * 日期排序
      * @param sql
      * @param alias
