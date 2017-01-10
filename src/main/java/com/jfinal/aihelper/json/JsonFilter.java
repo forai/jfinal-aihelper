@@ -1,6 +1,7 @@
 package com.jfinal.aihelper.json;
 
 import com.jfinal.plugin.activerecord.Model;
+import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 
 import java.util.List;
@@ -44,6 +45,11 @@ public class JsonFilter {
             r.keep(columns.split(","));
         }
         return r;
+    }
+
+    public static Page keep(Page page,String columns){
+        JsonFilter.keep(page.getList(), columns);
+        return page;
     }
 
 }

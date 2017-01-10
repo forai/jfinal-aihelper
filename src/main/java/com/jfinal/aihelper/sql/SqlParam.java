@@ -1,5 +1,7 @@
 package com.jfinal.aihelper.sql;
 
+import com.jfinal.kit.StrKit;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -238,7 +240,9 @@ public class SqlParam{
     }
 
     public void order(){
-        getSqlBuilder().order(getSql(),alias,getParamMap().getSort(),getParamMap().getOrder());
+        if(StrKit.notBlank(getParamMap().getSort())&&!StrKit.notBlank(getParamMap().getOrder())) {
+            getSqlBuilder().order(getSql(), alias, getParamMap().getSort(), getParamMap().getOrder());
+        }
     }
 
     /**
