@@ -20,6 +20,9 @@ public class MySqlBuilder implements ISqlBuilder {
         if (StringUtils.isBlank(column)) {
             throw new RuntimeException("column can not be null or blank !");
         }
+        if(value==null){
+            return;
+        }
         sql.append(" and ");
         sql.append(getAliasPrefix(alias));
         sql.append(column);
@@ -42,6 +45,9 @@ public class MySqlBuilder implements ISqlBuilder {
     public void search(StringBuffer sql, String alias, String[] searchColumns, Object value, List<Object> args) {
         if(searchColumns==null){
             throw new RuntimeException("searchColumns can not be null !");
+        }
+        if(value==null){
+            return;
         }
         if(searchColumns.length==1){
             sql.append(" and instr("+getAliasPrefix(alias)+searchColumns[0]+",?)>0");
@@ -66,6 +72,9 @@ public class MySqlBuilder implements ISqlBuilder {
         if (StringUtils.isBlank(column)) {
             throw new RuntimeException("column can not be null or blank !");
         }
+        if(value==null){
+            return;
+        }
         sql.append(" and "+getAliasPrefix(alias)+column+"<?");
         args.add(value);
     }
@@ -75,8 +84,28 @@ public class MySqlBuilder implements ISqlBuilder {
         if (StringUtils.isBlank(column)) {
             throw new RuntimeException("column can not be null or blank !");
         }
+        if(value==null){
+            return;
+        }
         sql.append(" and "+getAliasPrefix(alias)+column+">?");
         args.add(value);
+    }
+
+    @Override
+    public void in(StringBuffer sql, String alias, String column, String[] values, List<Object> args) {
+        if(values==null||values.length<=0){
+            return;
+        }
+        sql.append(" and "+getAliasPrefix(alias)+column+" in(");
+        for(int i=0;i<values.length;i++){
+            if(i==0){
+                sql.append("?");
+            }else {
+                sql.append(",?");
+            }
+            args.add(values[i]);
+        }
+        sql.append(")");
     }
 
     @Override

@@ -75,5 +75,15 @@ public interface ISqlBuilder {
      */
     void dateAfter(StringBuffer sql, String alias, String column, Object value, List<Object> args);
 
+    /**
+     * in 的sql 逻辑
+     * @param sql
+     * @param alias
+     * @param column
+     * @param values
+     * @param args
+     */
+    void in(StringBuffer sql,String alias,String column,String[] values,List<Object> args);
+
 
 }

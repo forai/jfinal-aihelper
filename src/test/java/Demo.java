@@ -15,7 +15,7 @@ public class Demo {
         p.start();
         AiSqlHelperPlugin p2 = new AiSqlHelperPlugin(SqlBuilderManager.ORACLE, new OracleBuilder());
         p2.start();
-        SqlParam sp = SqlParam.create(new ParamMap().put("age",17).put("addr","北京路").put("time",new Date()));
+        SqlParam sp = SqlParam.create(new ParamMap().put("age",17).put("addr","北京路").put("time",new Date()).put("type_ids","1,3,5,6"));
         sp.setSelect("select t1.* where 1=1");
         sp.alias("t1");
         sp.and("age","age");
@@ -24,6 +24,7 @@ public class Demo {
         sp.search("addr", "addr");
         sp.dateAfter("start_time","time");
         sp.dateBefore("end_time","time");
+        sp.in("type_id","type_ids");
         sp.orderBy("t1.start_time,t1.age asc");
         System.out.println(sp.getFullSql());
         for(Object ags:sp.argsAry()){

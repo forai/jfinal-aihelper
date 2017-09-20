@@ -77,6 +77,23 @@ public class OracleBuilder implements ISqlBuilder {
     }
 
     @Override
+    public void in(StringBuffer sql, String alias, String column, String[] values, List<Object> args) {
+        if(values==null||values.length<=0){
+            return;
+        }
+        sql.append(" and "+getAliasPrefix(alias)+column+" in(");
+        for(int i=0;i<values.length;i++){
+            if(i==0){
+                sql.append("?");
+            }else {
+                sql.append(",?");
+            }
+            args.add(values[i]);
+        }
+        sql.append(")");
+    }
+
+    @Override
     public void order(StringBuffer sql, String alias, String sort, String order) {
         if (StringUtils.isNotBlank(sort)) {
             sql.append(" order by " + getAliasPrefix(alias) + sort + " " + order);
