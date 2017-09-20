@@ -313,8 +313,8 @@ public class SqlParam {
 		if(values instanceof String){
 			getSqlBuilder().in(getSql(), alias, column, ((String) values).split(","), getArgs());
 		}
-		if(values instanceof Array){
-			getSqlBuilder().in(getSql(), alias, column, (String[]) values, getArgs());
+		if(values.getClass().isArray()){
+			getSqlBuilder().in(getSql(), alias, column, (Object[]) values, getArgs());
 		}
 		return this;
 	}

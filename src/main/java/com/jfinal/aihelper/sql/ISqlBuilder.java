@@ -83,7 +83,7 @@ public interface ISqlBuilder {
      * @param values
      * @param args
      */
-    void in(StringBuffer sql,String alias,String column,String[] values,List<Object> args);
+    void in(StringBuffer sql,String alias,String column,Object[] values,List<Object> args);
 
 
 }

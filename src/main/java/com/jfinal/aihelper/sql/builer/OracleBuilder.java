@@ -77,7 +77,7 @@ public class OracleBuilder implements ISqlBuilder {
     }
 
     @Override
-    public void in(StringBuffer sql, String alias, String column, String[] values, List<Object> args) {
+    public void in(StringBuffer sql, String alias, String column, Object[] values, List<Object> args) {
         if(values==null||values.length<=0){
             return;
         }
