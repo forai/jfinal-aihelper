@@ -19,6 +19,8 @@ public class Demo {
         sp.setSelect("select t1.* where 1=1");
         sp.alias("t1");
         sp.and("age","age");
+        //下面的更方便点
+        sp.isPositiveAnd("age");
         sqlBuilder.and(sp.getSql(),"t1","name","tj",sp.getArgs());//直接使用sqlbuilder也可以
         sp.search(new String[]{"home_addr","company_addr"},"addr");
         sp.search("addr", "addr");
