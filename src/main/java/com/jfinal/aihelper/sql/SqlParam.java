@@ -200,6 +200,93 @@ public class SqlParam {
 	}
 
 	/**
+	 * 拼装and的查询语句 是否是有效的字符串
+	 *
+	 * @param columns 字段名
+	 * 省略了key  key=column
+	 *
+	 */
+	public SqlParam isValidStrAnd(String[] columns) {
+		for(int i = 0;i<columns.length;i++) {
+			String column = columns[i];
+			if (getParamMap().isValidStr(column)) {
+				getSqlBuilder().and(getSql(), alias, column, getParamMapValue(column), getArgs());
+			}
+		}
+		return this;
+	}
+
+	/**
+	 * 拼装and的查询语句 是否是有效的字符串
+	 *
+	 * @param column 字段名
+	 * 省略了key  key=column
+	 *
+	 */
+	public SqlParam isValidStrAnd(String column) {
+		if(getParamMap().isValidStr(column)) {
+			getSqlBuilder().and(getSql(), alias, column, getParamMapValue(column), getArgs());
+		}
+		return this;
+	}
+
+	/**
+	 * 拼装and的查询语句 是否是有效的字符串
+	 *
+	 * @param column 字段名
+	 * @param key    对应的Map的key
+	 */
+	public SqlParam isValidStrAnd(String column, String key) {
+		if(getParamMap().isValidStr(key)) {
+			getSqlBuilder().and(getSql(), alias, column, getParamMapValue(key), getArgs());
+		}
+		return this;
+	}
+
+	/**
+	 * 拼装and的查询语句 是否大于0
+	 *
+	 * @param columns 字段名数组
+	 * 省略了key  key=column
+	 *
+	 */
+	public SqlParam isPositiveAnd(String[] columns) {
+		for(int i = 0;i<columns.length;i++) {
+			String column = columns[i];
+			if (getParamMap().isPositive(column)) {
+				getSqlBuilder().and(getSql(), alias, column, getParamMapValue(column), getArgs());
+			}
+		}
+		return this;
+	}
+
+	/**
+	 * 拼装and的查询语句 是否大于0
+	 *
+	 * @param column 字段名
+	 * 省略了key  key=column
+	 *
+	 */
+	public SqlParam isPositiveAnd(String column) {
+		if(getParamMap().isPositive(column)) {
+			getSqlBuilder().and(getSql(), alias, column, getParamMapValue(column), getArgs());
+		}
+		return this;
+	}
+	/**
+	 * 拼装and的查询语句 是否大于0
+	 *
+	 * @param column 字段名
+	 * @param key    对应的Map的key
+	 */
+	public SqlParam isPositiveAnd(String column, String key) {
+		if(getParamMap().isPositive(key)) {
+			getSqlBuilder().and(getSql(), alias, column, getParamMapValue(key), getArgs());
+		}
+		return this;
+	}
+
+	/**
 	 * 拼装and的查询语句
 	 *
 	 * @param column 字段名
