@@ -206,7 +206,7 @@ public class SqlParam {
 	 * 省略了key  key=column
 	 *
 	 */
-	public SqlParam isValidStrAnd(String[] columns) {
+	public SqlParam validStrAnd(String[] columns) {
 		for(int i = 0;i<columns.length;i++) {
 			String column = columns[i];
 			if (getParamMap().isValidStr(column)) {
@@ -223,7 +223,7 @@ public class SqlParam {
 	 * 省略了key  key=column
 	 *
 	 */
-	public SqlParam isValidStrAnd(String column) {
+	public SqlParam validStrAnd(String column) {
 		if(getParamMap().isValidStr(column)) {
 			getSqlBuilder().and(getSql(), alias, column, getParamMapValue(column), getArgs());
 		}
@@ -236,7 +236,7 @@ public class SqlParam {
 	 * @param column 字段名
 	 * @param key    对应的Map的key
 	 */
-	public SqlParam isValidStrAnd(String column, String key) {
+	public SqlParam validStrAnd(String column, String key) {
 		if(getParamMap().isValidStr(key)) {
 			getSqlBuilder().and(getSql(), alias, column, getParamMapValue(key), getArgs());
 		}
@@ -250,7 +250,7 @@ public class SqlParam {
 	 * 省略了key  key=column
 	 *
 	 */
-	public SqlParam isPositiveAnd(String[] columns) {
+	public SqlParam positiveAnd(String[] columns) {
 		for(int i = 0;i<columns.length;i++) {
 			String column = columns[i];
 			if (getParamMap().isPositive(column)) {
@@ -267,7 +267,7 @@ public class SqlParam {
 	 * 省略了key  key=column
 	 *
 	 */
-	public SqlParam isPositiveAnd(String column) {
+	public SqlParam positiveAnd(String column) {
 		if(getParamMap().isPositive(column)) {
 			getSqlBuilder().and(getSql(), alias, column, getParamMapValue(column), getArgs());
 		}
@@ -279,7 +279,7 @@ public class SqlParam {
 	 * @param column 字段名
 	 * @param key    对应的Map的key
 	 */
-	public SqlParam isPositiveAnd(String column, String key) {
+	public SqlParam positiveAnd(String column, String key) {
 		if(getParamMap().isPositive(key)) {
 			getSqlBuilder().and(getSql(), alias, column, getParamMapValue(key), getArgs());
 		}
@@ -303,6 +303,19 @@ public class SqlParam {
 	 * @param searchColumn 查询的字段
 	 * @param key          对面值的key
 	 */
+	public SqlParam validStrSearch(String searchColumn, String key) {
+		if(getParamMap().isValidStr(key)) {
+			search(new String[]{searchColumn}, key);
+		}
+		return this;
+	}
+
+	/**
+	 * 拼装查询语句
+	 *
+	 * @param searchColumn 查询的字段
+	 * @param key          对面值的key
+	 */
 	public SqlParam search(String searchColumn, String key) {
 		search(new String[]{searchColumn}, key);
 		return this;
@@ -316,6 +329,19 @@ public class SqlParam {
 	 */
 	public SqlParam search(String[] searchColumns, String key) {
 		getSqlBuilder().search(getSql(), alias, searchColumns, getParamMapValue(key), getArgs());
+		return this;
+	}
+
+	/**
+	 * 拼装查询语句
+	 *
+	 * @param searchColumns 查询的字段数组
+	 * @param key           对面值的key
+	 */
+	public SqlParam validStrSearch(String[] searchColumns, String key) {
+		if(getParamMap().isValidStr(key)) {
+			getSqlBuilder().search(getSql(), alias, searchColumns, getParamMapValue(key), getArgs());
+		}
 		return this;
 	}
 
