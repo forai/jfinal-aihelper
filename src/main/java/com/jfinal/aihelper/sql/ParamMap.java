@@ -34,12 +34,19 @@ public class ParamMap extends HashMap<String, Object> {
 		this.putAll(param);
 	}
 
-	public String getStr(String key) {
-		if (containsKey(key)) {
-			return get(key).toString();
-		} else {
-			return null;
+	@Override
+	public Object get(Object key) {
+		Object o = super.get(key);
+		if(o instanceof String[]){
+			String[] ary =  (String[])o;
+			return ary[0];
+		}else {
+			return super.get(key);
 		}
+	}
+
+	public String getStr(String key) {
+		return this.containsKey(key) ? this.get(key).toString() : null;
 	}
 
 	public Date getDate(String key) {
@@ -57,10 +64,11 @@ public class ParamMap extends HashMap<String, Object> {
 	}
 
 	public Integer getInt(String key, Integer defVal) {
-		if (containsKey(key)) {
-			return Integer.parseInt(this.getStr(key));
-		}
-		return defVal;
+		return this.containsKey(key) ? Integer.parseInt(this.getStr(key)) : defVal;
+//		if (containsKey(key)) {
+//			return Integer.parseInt(this.getStr(key));
+//		}
+//		return defVal;
 	}
 
 	public Integer getInt(String key) {
